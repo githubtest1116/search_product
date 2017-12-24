@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# 2017/12/17追加
+# 2017/12/17変更
 gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
@@ -54,9 +54,11 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # 2017/12/17追加
-#gem 'rakuten_web_service' , '1.5.0'
-gem 'rakuten_web_service'
+gem 'rakuten_web_service' , '1.5.0'
+#gem 'rakuten_web_service'
 gem 'dotenv-rails'
+gem "chartkick"
+gem 'lazy_high_charts'
 
 group :production do
   gem 'pg'

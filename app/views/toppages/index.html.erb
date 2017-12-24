@@ -1,0 +1,11 @@
+<%= if logged_in? %>
+
+<% else %>
+	<div class="text-center">
+		<h1>ログインして下さい</h1>
+		<%= link_to 'ログイン', sessions_new_path class:"btn btn-primary "%>	
+
+		<h1>新規登録はこちらです</h1>
+		<%= link_to '新規登録', signup_path class:"btn btn-primary "%>	
+	</div>
+<% end %>

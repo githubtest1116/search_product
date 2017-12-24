@@ -1,0 +1,34 @@
+<% if items %>
+	<div class="row">
+		<% items.each do |item| %>
+			<div class="col-sm-3">
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<img src="<%= item.image_url %>" alt="no image" style='max-width: 100%;'>
+				</div>
+				<div class="panel-body">
+					<% if false %>
+					<p><%= link_to item.name item_path(item) %></p>
+					<p><%= item.price %>円</p>
+					<% end %>
+					
+					<%# if false %>
+					<% if register?(item) %>
+						<p><%= link_to item.name, Item.find_by(code: item.code) %></p>
+						<p><%= item.price %>円</p>
+					<% else %>
+						<p><%= item.name %></p>
+						<p><%= item.price %>円</p>
+					<% end %>
+					
+					<%# end %>
+				
+				</div>
+				<div class="text-center">
+					<%= render 'want_button', item: item %>
+				</div>
+			</div>
+			</div>
+		<% end %>
+	</div>
+<% end %>
