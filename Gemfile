@@ -60,6 +60,10 @@ gem 'dotenv-rails'
 gem "chartkick"
 gem 'lazy_high_charts'
 
+#2018/1/1追加
+# ページの表示件数の設定
+gem 'kaminari'
+
 group :production do
   gem 'pg'
 end

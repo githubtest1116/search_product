@@ -21,7 +21,8 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
   end
-  
+
+<<-PAGE  
   def create
     @item = Item.find_or_initialize_by(code: params[:item_code])
     
@@ -31,29 +32,16 @@ class ItemsController < ApplicationController
       
       @item = Item.new(read(results.first))
       @item.save
-    else
-      flash[:danger] = "商品は既に登録されています"
+    #else
+    #  flash[:danger] = "商品は既に登録されています"
     end
     
     
     redirect_back(fallback_location: root_url)
   end
+PAGE
 
   private
   
-  def read(result)
-    code = result['itemCode']
-    name = result['itemName']
-    price = result['itemPrice']
-    url = result['itemUrl']
-    image_url = result['mediumImageUrls'].first['imageUrl'].gsub('?_ex=128x128', '')
-    
-    return {
-      code: code,
-      name: name,
-      price: price,
-      url: url,
-      image_url: image_url,
-    }
-  end
+
 end

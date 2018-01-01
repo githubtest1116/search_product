@@ -1,13 +1,13 @@
 <div class="row">
-	<div class="text-center">
-
-		<%= form_tag(new_item_path, method: :get) do %>
-			<div class="form-group">
-				<%= text_field_tag :keyword, @keyword, class:"form-control", placeholder:"キーワードを入力して下さい", size:40%>
-			</div>
-			<%= submit_tag '商品を検索', class:"btn btn-success" %>
-		<% end %>
-
+	<div class="item-search">
+		<div class="text-center">
+			<%= form_tag(new_item_path, method: :get) do %>
+				<div class="form-group">
+					<%= text_field_tag :keyword, @keyword, class:"form-control", placeholder:"キーワードを入力して下さい", size:40%>
+				</div>
+				<%= submit_tag '商品を検索', class:"btn btn-success" %>
+			<% end %>
+		</div>
 	</div>
 </div>
 

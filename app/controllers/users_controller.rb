@@ -1,7 +1,4 @@
 class UsersController < ApplicationController
-  def show
-    @user = User.find(params[:id])
-  end
 
   def new
     @user = User.new
@@ -12,13 +9,22 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = 'ユーザを登録しました。'
+      
+      #セッション情報を設定
+      session[:user_id] = @user.id
+      
       redirect_to @user
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end
   end
-  
+
+  def show
+    @user = User.find(params[:id])
+    @items = @user.ownership_items.page(params[:page]).per(5)
+  end
+
   private
   
   def user_params

@@ -1,3 +1,51 @@
+<% if false %>
+#ユーザ情報の詳細画面
+#本画面は、ユーザ画像とお気に入り登録された商品の一覧を表示する。
+#ユーザ情報の編集、削除への画面遷移を持つ。
+#お気に入り登録商品への画面遷移を持つ。
+<% end %>
+
+<div class="row">
+	<div class="col-xs-4">
+		<div class="user-profile">
+			<div class="icon text-center">
+				<img src="<%= gravatar_url(@user, size: 100) %>" alt="" class="img-circle">
+			</div>
+			<div clas="name text-center">
+				<h1><%= @user.name %></h1>
+			</div>
+		</div>	
+	</div>
+	<div class="col-xs-8">
+		<% if @items.count != 0 %>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>商品名</th>
+						<th>価格</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @items.each do |item| %>
+						<tr>
+							<td><%= link_to item.url, item %></td>
+							<td><%= item.price %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+			<div>
+				<%= paginate @items %>
+			</div>
+		<% else %>
+		 <h4>商品が登録されていません</h4>
+		 グレー表示がいい
+		<% end %>
+	</div>
+</div>
+
+<% if false %>
+
 <div class="user-profile">
 	<div class="icon text-center">
 		<img src="<%= gravatar_url(@user, size: 100) %>" alt="" class="img-circle">
@@ -6,3 +54,31 @@
 		<h1><%= @user.name %></h1>
 	</div>
 </div>
+
+
+<% if @items %>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>商品名</th>
+				<th>価格</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @items.each do |item| %>
+				<tr>
+					<th><%= link_to item.url, item %></th>
+					<th><%= item.price %></th>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<div>
+		<%= paginate @items %>
+	</div>
+<% else %>
+ <h4>商品が登録されていません</h4>
+ グレー表示がいい
+<% end %>
+
+<% end %>
