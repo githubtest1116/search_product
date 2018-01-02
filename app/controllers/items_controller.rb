@@ -5,43 +5,54 @@ class ItemsController < ApplicationController
     @keyword = params[:keyword]
     
     if @keyword.present?
+      #楽天
       results = RakutenWebService::Ichiba::Item.search({
         keyword: @keyword,
         imageFlag: 1,
         hits: 20,
       })
-      
       results.each do |result|
-        item = Item.new(read(result))
+        item = Item.find_or_initialize_by(read_rakuten(result))
         @items << item
+
+      #Amazon
+      #results = 
+      #results.each do |result|
+      #  item = Item.find_or_initialize_by(read_amazon(result))
+      #  @items << item
+
+      #Yahoo
+      #results = 
+      #results.each do |result|
+      #  item = Item.find_or_initialize_by(read_yahoo(result))
+      #  @items << item
+
       end
     end
   end
   
   def show
     @item = Item.find(params[:id])
-  end
 
-<<-PAGE  
-  def create
-    @item = Item.find_or_initialize_by(code: params[:item_code])
+    #横軸
+    xAxis_categories = ['2013-11-09', '2013-11-10', '2013-11-11', '2013-11-12']
+
+    #横軸の間隔
+    tickInterval = 1
     
-    unless @item.persisted?
-      flash[:success] = "商品を登録しました"
-      results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
-      
-      @item = Item.new(read(results.first))
-      @item.save
-    #else
-    #  flash[:danger] = "商品は既に登録されています"
+    #縦軸
+    data = [120, 80, 90, 150]
+    
+    @graph_data = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '価格推移')
+      f.xAxis(categories: xAxis_categories, tickInterval: tickInterval)
+      f.series(name: '価格推移', data: data, type: 'spline')
     end
-    
-    
-    redirect_back(fallback_location: root_url)
+
+
+
+
   end
-PAGE
 
   private
-  
-
 end

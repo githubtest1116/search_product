@@ -35,8 +35,18 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.update-button {
+	text-align: right;
+}
 
 /* want */
 .want {
 	margin: 10px;
+}
+
+/* user-profile */
+.item-table table td read-size{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

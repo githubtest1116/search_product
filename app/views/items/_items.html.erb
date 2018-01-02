@@ -8,8 +8,8 @@
 							<img src="<%= item.image_url %>" alt="no image">
 						</div>
 						<div class="panel-body">
-							<% if register?(item) %>
-								<p class="item-title"><%= link_to item.name, Item.find_by(code: item.code) %></p>
+							<% if current_user.want?(item) %>
+								<p class="item-title"><%= link_to item.name, item %></p>
 								<p><%= item.price %>円</p>
 							<% else %>
 								<p class="item-title"><%= item.name %></p>
@@ -17,7 +17,12 @@
 							<% end %>
 						</div>
 						<div class="text-center">
-							<%= render 'want_button', item: item %>
+							<% if logged_in? %>
+								<%= render 'ownerships/want_button', item: item %>
+							<% end %>
+						</div>
+						<div class="panel-footer text-center">
+							<%= item.company %>
 						</div>
 					</div>
 				</div>

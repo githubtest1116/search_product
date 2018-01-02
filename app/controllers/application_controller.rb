@@ -11,11 +11,12 @@ class ApplicationController < ActionController::Base
   	end
   end
 
-  def read(result)
+  def read_rakuten(result)
     code = result['itemCode']
     name = result['itemName']
     price = result['itemPrice']
     url = result['itemUrl']
+    company = '楽天'
     image_url = result['mediumImageUrls'].first['imageUrl'].gsub('?_ex=128x128', '')
     
     return {
@@ -23,6 +24,7 @@ class ApplicationController < ActionController::Base
       name: name,
       price: price,
       url: url,
+      company: company,
       image_url: image_url,
     }
   end

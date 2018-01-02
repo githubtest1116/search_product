@@ -1,24 +1,29 @@
+<%if false %>
+#商品の詳細画面
+#商品画像と商品へのリンク、価格情報のグラフを持つ
+<% end %>
+
 <div class="row">
-	<div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-3">
+	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="item">
 			<div class="panel panel-default">
 				<div class="panel-heading text-center">
 					<img src="<%= @item.image_url %>" alt="">
 				</div>
 				<div class="panel-body">
-					<p><%= @item.name %></p>
-					<p><%= @item.price %>円</p>
+					<p class="item-title"><%= @item.name %></p>
 				</div>
 			</div>
 		</div>
+				<p class="text-center"><%= link_to '楽天詳細ページ', @item.url, targe: '_blank', class:"btn btn-success"%></p>
 	</div>
 	
 	<%# 価格チャートをここに載せる %>
-	<div class="col-md-3 col-sm-6 col-xs-12">
+	<div class="col-md-9 col-sm-6 col-xs-12">
+		<%= high_chart("chart-1", @graph_data) %>
 		
-
-		<p class="text-center"><%= link_to '楽天詳細ページ', @item.url, targe: '_blank' %></p>
+		<div class="update-button">
+			<a href="#" class="btn btn-primary">価格更新</a>
+		</div>
 	</div>
-	
-	
 </div>

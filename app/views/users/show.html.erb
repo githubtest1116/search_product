@@ -16,7 +16,7 @@
 			</div>
 		</div>	
 	</div>
-	<div class="col-xs-8">
+	<div class="col-xs-8 item-table">
 		<% if @items.count != 0 %>
 			<table class="table table-striped">
 				<thead>
@@ -28,7 +28,7 @@
 				<tbody>
 					<% @items.each do |item| %>
 						<tr>
-							<td><%= link_to item.url, item %></td>
+							<td class="read-size"><%= link_to item.name, item %></td>
 							<td><%= item.price %></td>
 						</tr>
 					<% end %>
@@ -39,7 +39,6 @@
 			</div>
 		<% else %>
 		 <h4>商品が登録されていません</h4>
-		 グレー表示がいい
 		<% end %>
 	</div>
 </div>

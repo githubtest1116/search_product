@@ -1,17 +1,5 @@
 <div class="want">
-	
-	<%# どうしても登録済みにならなかったのでとりあえず放置した。 %>
-	<%# 後で見直す場合はownerships_controllerの部分の修正が必要。%>
-		<%= form_tag(ownerships_path) do %>
-			<%= hidden_field_tag :item_code, item.code %>
-			<%= hidden_field_tag :type, 'Want' %>
-			<%= submit_tag 'お気に入り登録', class:"btn btn-primary" %>
-		<% end %>
-	
-	<% if false %>
-	<%# if current_user.want?(item) %>
-	<% if Item.find_by(code: item.code) %>
-	<%# if register?(item) %>
+	<% if current_user.want?(item) %>
 	<%# お気に入り登録済みの場合 %>
 		<%= form_tag(ownership_path(item.id), method: :delete) do %>
 			<%= hidden_field_tag :item_id, item.id %>
@@ -26,7 +14,5 @@
 			<%= submit_tag 'お気に入り登録', class:"btn btn-primary" %>
 		<% end %>
 	<% end %>
-	<% end %>
-
 </div>
 

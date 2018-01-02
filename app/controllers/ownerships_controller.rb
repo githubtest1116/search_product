@@ -1,28 +1,32 @@
 class OwnershipsController < ApplicationController
 	def create
     @item = Item.find_or_initialize_by(code: params[:item_code])
-    @item = Item.find_or_initialize_by(code: params[:item_code])
     
     unless @item.persisted?
-      flash[:success] = "お気に入りに登録しました"
-      results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
-      
-      #うーん、なぜかreadメソッドが動かない・・・
-      #とりあえず直打ちに設定しておく
-      #@item = Item.new(read(results.first))
-      
-        @item.code = results.first['itemCode']
-        @item.name = results.first['itemName']
-        @item.price = results.first['itemPrice']
-        @item.url = results.first['itemUrl']
-        @item.image_url = results.first['mediumImageUrls'].first['imageUrl'].gsub('?_ex=128x128', '')
 
+      #各社の商品検索APIを呼び出す
+      #楽天
+      results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
+
+<<-PAGE
+      if results == nil
+        #Amazon
+        #results = 
+      end
+
+      if results == nil
+        #Yahoo
+        #results = 
+      end
+PAGE
+      #ここから共通
+      @item = Item.new(read_rakuten(results.first))
       @item.save
-    
+      flash[:success] = "お気に入りに登録しました"    
     ####
     #暫定で追加中
-    else
-      flash[:danger] = "商品は既に登録されています"
+    #else
+    #  flash[:danger] = "商品は既に登録されています"
     #####
     end
     current_user.want(@item)
