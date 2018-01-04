@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_params, only: [:show, :edit, :update, :destroy]
 
   def new
     @user = User.new
@@ -21,11 +22,43 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    #before_action
     @items = @user.ownership_items.page(params[:page]).per(5)
+  end
+  
+  def edit
+    #before_action
+  end
+  
+  def update
+    #before_action
+    
+    #if !@user == nil && @user.update(user_params)
+    #if @user.update(user_params) && params[:password] != nil
+    if @user.update(user_params) 
+      flash[:success] = "登録情報を更新しました"
+      redirect_to @user
+    else
+      flash.now[:danger] = "登録情報の更新が出来ませんでした"
+      render :edit
+    end
+  end
+  
+  def destroy
+    #before_action
+    
+    @user.destroy
+    
+    flash[:success] = "登録情報を削除しました"
+    session[:user_id] = nil
+    redirect_to root_url
   end
 
   private
+
+  def set_params
+    @user = User.find(params[:id])
+  end
   
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

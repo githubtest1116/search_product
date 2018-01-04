@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-				<p class="text-center"><%= link_to '楽天詳細ページ', @item.url, targe: '_blank', class:"btn btn-success"%></p>
+				<p class="text-center"><%= link_to "#{@item.company}詳細ページ", @item.url, targe: '_blank', class:"btn btn-success"%></p>
 	</div>
 	
 	<%# 価格チャートをここに載せる %>
@@ -23,7 +23,11 @@
 		<%= high_chart("chart-1", @graph_data) %>
 		
 		<div class="update-button">
-			<a href="#" class="btn btn-primary">価格更新</a>
+			<%= form_tag(items_path) do %>
+				<%= hidden_field_tag :item_code, @item.code %>
+				<%= submit_tag '価格更新', class:"btn btn-primary" %>
+			<% end %>
 		</div>
 	</div>
 </div>
+

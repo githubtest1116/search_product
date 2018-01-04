@@ -11,12 +11,12 @@ class OwnershipsController < ApplicationController
 <<-PAGE
       if results == nil
         #Amazon
-        #results = 
+        results = 
       end
 
       if results == nil
         #Yahoo
-        #results = 
+        results = 
       end
 PAGE
       #ここから共通

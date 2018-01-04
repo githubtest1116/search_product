@@ -13,3 +13,7 @@ module ProductSearch
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+#日本時間になるように修正
+#config.time_zone = 'Asia/Tokyo'
+#config.active_record.default_timezone = :local

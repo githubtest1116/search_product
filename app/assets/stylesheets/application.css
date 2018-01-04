@@ -50,3 +50,9 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+/* うーん、本当はinfoの色にしようと思ったが、出来なかった */
+.user-profile .panel-footer .panel-custom {
+	color: #fff;
+	background: #5bc0de;
+	border: #5bc0de;
+}
