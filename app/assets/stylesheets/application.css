@@ -38,6 +38,9 @@
 .update-button {
 	text-align: right;
 }
+.item .panel-heading img {
+	background-size: contain;
+}
 
 /* want */
 .want {

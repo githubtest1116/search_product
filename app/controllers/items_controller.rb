@@ -62,6 +62,10 @@ class ItemsController < ApplicationController
       xAxis_categories << result.created_at.strftime('%Y年%m月%d日')
       yAxis_data << result.price.to_i
     end
+    
+    #最新の7日間のみに整形
+    xAxis_categories = xAxis_categories.last(7)
+    yAxis_data = yAxis_data.last(7)
 
     @graph_data = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: '価格推移')
