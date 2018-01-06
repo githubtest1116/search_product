@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_params, only: [:show, :edit, :update, :destroy]
+  before_action :require_user_logged_in, only: [:show]
 
   def new
     @user = User.new
@@ -32,10 +33,8 @@ class UsersController < ApplicationController
   
   def update
     #before_action
-    
-    #if !@user == nil && @user.update(user_params)
-    #if @user.update(user_params) && params[:password] != nil
-    if @user.update(user_params) 
+
+    if @user.update(user_params) && params[:user][:password] != "" && params[:user][:password_confirmation] != ""
       flash[:success] = "登録情報を更新しました"
       redirect_to @user
     else

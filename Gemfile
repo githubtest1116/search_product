@@ -64,6 +64,9 @@ gem 'lazy_high_charts'
 # ページの表示件数の設定
 gem 'kaminari'
 
+#2018/1/6追加
+gem 'pry-byebug', group: :development
+
 group :production do
   gem 'pg'
 end
