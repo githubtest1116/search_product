@@ -26,6 +26,11 @@ module UsersHelper
 		
 		a  = a.last(2)
 		
+		#初回登録時に比較用にデータを設定する
+		if a.count == 1
+			a << a[0]
+		end
+		
 		if a[0] > a[1]
 			#最新価格の方が安い場合
 			return 0
