@@ -13,15 +13,20 @@
 				<div class="panel-body">
 					<p class="item-title"><%= @item.name %></p>
 				</div>
+				<div class="text-center">
+					<%= render 'ownerships/want_button', item: @item %>
+				</div>
 			</div>
 		</div>
-				<p class="text-center"><%= link_to "#{@item.company}詳細ページ", @item.url, targe: '_blank', class:"btn btn-success"%></p>
+		<p class="text-center"><%= link_to "#{@item.company}詳細ページ", @item.url, targe: '_blank', class:"btn btn-success"%></p>
 	</div>
 	
 	<%# 価格チャートをここに載せる %>
 	<div class="col-md-9 col-sm-6 col-xs-12">
 		<%= high_chart("chart-1", @graph_data) %>
-		
+		<div class="text-left itme_show_font_size">
+			<span>※最新の7日間分を表示</span>
+		</div>
 		<div class="update-button">
 			<%= form_tag(items_path) do %>
 				<%= hidden_field_tag :item_code, @item.code %>

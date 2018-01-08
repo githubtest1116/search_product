@@ -29,21 +29,42 @@
 	<div class="col-xs-9 item-table">
 		<% if @items.count != 0 %>
 			<table class="table table-striped">
-				<thead>
+				<thead class="table-edit">
 					<tr>
-						<th>商品名</th>
-						<th>価格</th>
+						<th class="table1">商品名</th>
+						<th class="table2">価格</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% @items.each do |item| %>
 						<tr>
 							<td class="read-size"><%= link_to item.name, item %></td>
-							<td><%= item.price %></td>
+							<td>
+								<%= latest_price_display(item) %>
+								<%# 最新価格の方が安い場合 %>
+								<% if (p = comparing_price(item)) == 0 %>
+									<span class="glyphicon glyphicon-circle-arrow-down color-down"></span>
+								<%# 最新価格の方が高い場合 %>
+								<% elsif p == 1 %>
+									<span class="glyphicon glyphicon-circle-arrow-up color-up"></span>
+								<%# 最新価格に変化ない場合 %>
+								<% else %>
+									<span class="glyphicon glyphicon-circle-arrow-right color-right"></span>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				</tbody>
 			</table>
+			<div class="help">
+				<%= link_to 'ヘルプ', help_path, remote: true, :onclick=>"var w = ( screen.width-640 ) / 2; var h = ( screen.height-480 ) / 2; window.open(this.href,'XXX', 'height=480, width=640'+',left='+w+',top='+h);return false;" %>
+			</div>
+			<div class="update-button">
+				<%= form_tag(bulk_create_path) do %>
+					<%= hidden_field_tag :items, @items %>
+					<%= submit_tag '一括更新', class:"btn btn-primary" %>
+				<% end %>
+			</div>
 			<div>
 				<%= paginate @items %>
 			</div>
@@ -52,3 +73,22 @@
 		<% end %>
 	</div>
 </div>
+
+<%if false %>
+<script type="text/javascript"> 
+function check(){
+
+	if(window.confirm('少し時間がかかりますが、実行しますか?')){
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		return false; // 送信を中止
+
+	}
+
+}
+</script>
+<% end %>

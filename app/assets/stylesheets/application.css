@@ -38,8 +38,27 @@
 .update-button {
 	text-align: right;
 }
+.itme_show_font_size {
+	font-size: small;
+	padding-left: 20px;
+	color:#666666;
+}
+
 .item .panel-heading img {
 	background-size: contain;
+}
+.color-down {
+	color: blue;
+}
+.color-up {
+	color: red;
+}
+.color-right {
+	color: gray;
+}
+.help {
+	margin-bottom: 10px;
+	text-align: right;
 }
 
 /* want */
@@ -58,4 +77,10 @@
 	color: #fff;
 	background: #5bc0de;
 	border: #5bc0de;
+}
+.table-edit .table1 {
+	width:88%;
+}
+.table-edit .table2 {
+	width:12%;
 }

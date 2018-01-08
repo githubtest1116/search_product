@@ -22,23 +22,27 @@ class ItemsController < ApplicationController
   def create
     @item = Item.find_by(code: params[:item_code])
     
-    ##各社の商品検索APIを呼び出す
-    #Yahoo!
-    yahoo_application_id = ENV['YAHOO_APPID']
-    yahoo_url = "https://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemLookup"
-    url = yahoo_url + "?appid=" + yahoo_application_id + "&itemcode=" + @item.code + "&image_size=132"
-    result = JSON.parse(open(url).read, symbolize_names: true)
-    
-    if result[:ResultSet][:totalResultsReturned] != "0"
-      @item = Item.new(read_yahoo_itemLookup_update(result))
-    else
-      #楽天
-      results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
-      @item = Item.new(read_rakuten(results.first))
-    end
+    #更新用API呼び出し
+    update_price
 
     @item.save
     flash[:success] = "価格情報を更新しました" 
+    redirect_back(fallback_location: root_url)
+  end
+  
+  def bulk_create
+    @items = current_user.ownership_items
+    
+    @items.each do |item|
+      @item = Item.find_by(code: item.code)
+      
+      #更新用API呼び出し
+      update_price
+      
+      @item.save
+    end
+
+    flash[:success] = "価格情報を一括更新しました" 
     redirect_back(fallback_location: root_url)
   end
   
@@ -114,6 +118,23 @@ class ItemsController < ApplicationController
     results_yahoo.each do |result|
       item = Item.find_or_initialize_by(read_yahoo(result))
       @items << item
+    end
+  end
+  
+  def update_price
+    ##各社の商品検索APIを呼び出す
+    #Yahoo!
+    yahoo_application_id = ENV['YAHOO_APPID']
+    yahoo_url = "https://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemLookup"
+    url = yahoo_url + "?appid=" + yahoo_application_id + "&itemcode=" + @item.code + "&image_size=132"
+    result = JSON.parse(open(url).read, symbolize_names: true)
+    
+    if result[:ResultSet][:totalResultsReturned] != "0"
+      @item = Item.new(read_yahoo_itemLookup_update(result))
+    else
+      #楽天
+      results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
+      @item = Item.new(read_rakuten(results.first))
     end
   end
 end
