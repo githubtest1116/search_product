@@ -57,7 +57,10 @@
 				</tbody>
 			</table>
 			<div class="help">
-				<%= link_to 'ヘルプ', help_path, remote: true, :onclick=>"var w = ( screen.width-640 ) / 2; var h = ( screen.height-480 ) / 2; window.open(this.href,'XXX', 'height=480, width=640'+',left='+w+',top='+h);return false;" %>
+				<%= link_to help_path, remote: true, :onclick=>"var w = ( screen.width-640 ) / 2; var h = ( screen.height-480 ) / 2; window.open(this.href,'XXX', 'height=480, width=640'+',left='+w+',top='+h);return false;" do %>
+					<span class="glyphicon glyphicon-question-sign"></span>
+					ヘルプ
+				<% end %>
 			</div>
 			<div class="update-button">
 				<%= form_tag(bulk_create_path) do %>
