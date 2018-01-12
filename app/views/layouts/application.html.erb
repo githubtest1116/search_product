@@ -11,15 +11,20 @@
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- app/assets/stylesheets -->
-    <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag  'application', media: 'all' %>
+    <%#= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/footerFixed.js"></script>
+    <% if false %>
+    <script type="text/javascript" src="javascripts/footerFixed.js" 'data-turbolinks-track': 'reload'></script>
+    <% end %>
+    <%#= javascript_include_tag "footerFixed", 'data-turbolinks-track': 'reload' %>
     <!-- Bootstrap JavaScript-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- app/assets/javascripts-->
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
+    <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%#= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

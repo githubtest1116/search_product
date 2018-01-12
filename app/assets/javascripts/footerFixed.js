@@ -29,7 +29,8 @@ new function(){
 		}
 		if(ft+fh<wh){
 			document.getElementById(footerId).style.position = "relative";
-			document.getElementById(footerId).style.top = (wh-fh-ft-1)+"px";
+			//document.getElementById(footerId).style.top = (wh-fh-ft-1)+"px";
+			document.getElementById(footerId).style.top = (wh-fh-ft)+"px";
 		}
 	}
 	
