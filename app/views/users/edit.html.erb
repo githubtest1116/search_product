@@ -1,5 +1,31 @@
 <div class="row">
-	<div class="col-xs-offset-3 col-xs-6">
+	
+	<div class="col-xs-offset-1 col-xs-3">
+		<div class="user-profile">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="icon text-center">
+						<img src="<%= gravatar_url(@user, size: 100) %>" alt="" class="img-circle">
+					</div>
+				</div>
+				<div class="panel-footer panel-custom">
+					<div class="text-center">
+						<h4><%= @user.name %>さん</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p>アバター画像はGravatarを使っています</br>登録は<a href="https://ja.gravatar.com/" target="_blank">こちら</a>から</p>
+	</div>
+
+
+
+
+
+
+
+
+	<div class="col-xs-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">ユーザ編集</div>
 			<%= render 'layouts/error_messages', message: @user %>

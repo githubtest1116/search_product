@@ -67,6 +67,9 @@ gem 'kaminari'
 #2018/1/6追加
 gem 'pry-byebug', group: :development
 
+#2018/1/9追加
+gem 'nokogiri'
+
 group :production do
   gem 'pg'
 end
