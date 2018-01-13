@@ -65,7 +65,7 @@
 			<div class="update-button">
 				<%= form_tag(bulk_create_path) do %>
 					<%= hidden_field_tag :items, @items %>
-					<%= submit_tag '一括更新', class:"btn btn-primary" %>
+					<%= submit_tag '一括更新', class:"btn btn-primary" , data: { confirm: "少し時間がかかりますが、よろしいですか?"}%>
 				<% end %>
 			</div>
 			<div>
@@ -76,22 +76,3 @@
 		<% end %>
 	</div>
 </div>
-
-<%if false %>
-<script type="text/javascript"> 
-function check(){
-
-	if(window.confirm('少し時間がかかりますが、実行しますか?')){
-
-		return true; // 「OK」時は送信を実行
-
-	}
-	else{ // 「キャンセル」時の処理
-
-		return false; // 送信を中止
-
-	}
-
-}
-</script>
-<% end %>
