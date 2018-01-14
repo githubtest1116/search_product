@@ -37,12 +37,12 @@ class ItemsController < ApplicationController
   
   def bulk_create
     @items = current_user.ownership_items
+    @count = 0
 
     @items.each do |item|
       @item = Item.find_by(code: item.code)
       @i = 0
-      @count = 0
-      
+
       #更新用API呼び出し
       update_price
       @count = @count + @i
