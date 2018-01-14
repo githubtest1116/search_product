@@ -103,8 +103,9 @@ class ItemsController < ApplicationController
     @i = 0
     
     if item_url != "" && item_url.include?("farfetch.com")
+      #@item = item_scraping(item_url)
+      item_scraping(item_url)
       if @i == 0
-        @item = item_scraping(item_url)
         @item.save
         current_user.want(@item)
         flash[:success] = "商品を追加しました" 
@@ -251,7 +252,7 @@ class ItemsController < ApplicationController
       @item.image_url = value
     end
 
-    return @item
+    #return @item
   end
 
   def item_scraping_continue(item)
