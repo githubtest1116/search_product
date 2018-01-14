@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
       #current_user.want(@item)
       flash[:success] = "価格情報を更新しました" 
     else
-      flash[:warning] = "商品が存在しません"
+      flash[:warning] = "価格情報が更新できませんでした。商品が存在するか確認してください。"
     end
     redirect_back(fallback_location: root_url) 
   end
@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
     if @count == 0
       flash[:success] = "価格情報を一括更新しました" 
     else
-      flash[:warning] = "#{@i}個更新ができませんでした"
+      flash[:warning] = "#{@i}件の更新ができませんでした"
     end
     redirect_back(fallback_location: root_url)
   end
