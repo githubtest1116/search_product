@@ -1,14 +1,21 @@
-<% if logged_in? %>
-	<div class="text-center">
-		<h1>商品検索</h1>
-		<%= link_to '商品を探す', new_item_path, class:"btn btn-success"%>
+<% content_for :cover do %>
+	<div class="cover">
+		<p>ネットサーフィンの時間を節約しませんか？</p>
 	</div>
-<% else %>
-	<div class="text-center">
-		<h1>ログインして下さい</h1>
-		<%= link_to 'ログイン', login_path, class:"btn btn-primary "%>	
-
-		<h1>新規登録はこちらです</h1>
-		<%= link_to '新規登録', signup_path, class:"btn btn-primary "%>	
-	</div>
+	<% if logged_in? %>
+		<div class="text-center">
+			<h1>商品検索</h1>
+			<%= link_to '商品を探す', new_item_path, class:"btn btn-success"%>
+		</div>
+	<% else %>
+		<div class="text-center">
+			<p class="top_page_font">気になるアイテムをチェックしましょう！ログインはこちらです</p>
+			<%= link_to 'ログイン', login_path, class:"btn btn-primary btn-custom"%>	
+	
+			<p class="top_page_font">新規登録はこちらです</p>
+			<%= link_to '新規登録', signup_path, class:"btn btn-info btn-custom"%>	
+		</div>
+	<% end %>
 <% end %>
+
+<%#= image_tag "top_page.jpg", class:"top_image", :size => "1200x400" %>
