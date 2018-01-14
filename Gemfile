@@ -74,6 +74,9 @@ gem 'nokogiri'
 #2018/1/12追加
 #gem 'jquery-turbolinks'
 
+#2018/1/13追加
+gem 'mechanize'
+
 group :production do
   gem 'pg'
 end

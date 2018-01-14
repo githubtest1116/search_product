@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root to: 'toppages#index'
   
   #ユーザ登録関連
-  #ユーザ編集、削除関連は別途作成する。
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
@@ -11,9 +10,11 @@ Rails.application.routes.draw do
   #ログイン/ログアウト関連
   get 'signup', to: 'users#new'
 
+  #ユーザ詳細　追加情報関連
   get 'users/help', to: 'users#help', as: 'help'
-  #root to: 'items#new'
-  #get 'items/new'
+  get 'items/register', to:'items#item_register_url', as: 'item_register_url'
+  post 'items/register', to:'items#item_register_info', as: 'item_register_info'
+  
   resources :items, only:[:new, :show, :create]
   resources :users, only:[:show, :new, :create, :edit, :update, :destroy]
   resources :ownerships, only: [:create, :destroy]

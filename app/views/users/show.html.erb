@@ -65,14 +65,19 @@
 			<div class="update-button">
 				<%= form_tag(bulk_create_path) do %>
 					<%= hidden_field_tag :items, @items %>
-					<%= submit_tag '一括更新', class:"btn btn-primary" , data: { confirm: "少し時間がかかりますが、よろしいですか?"}%>
+					<%= submit_tag '一括更新', class:"right-button btn btn-primary" , data: { confirm: "少し時間がかかりますが、よろしいですか?"} %>
 				<% end %>
+				<%= link_to '商品を追加', item_register_url_path, class:"btn btn-success" %>
+				<%#= link_to '商品を追加', item_register_url_path, class:"btn btn-success", remote: true, :onclick=>"var w = ( screen.width-640 ) / 2; var h = ( screen.height-480 ) / 2; window.open(this.href,'XXX', 'height=480, width=640'+',left='+w+',top='+h);return false;" %>
 			</div>
 			<div>
 				<%= paginate @items %>
 			</div>
 		<% else %>
 		 <h4>商品が登録されていません</h4>
+		 <div class="update-button">
+		 	 <%= link_to '商品を追加', item_register_url_path, class:"btn btn-success" %>
+		 </div>
 		<% end %>
 	</div>
 </div>

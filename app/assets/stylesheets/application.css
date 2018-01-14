@@ -38,6 +38,11 @@
 .update-button {
 	text-align: right;
 }
+.update-button .right-button {
+	margin-left: 5px;
+	float:right;
+}
+
 .itme_show_font_size {
 	font-size: small;
 	padding-left: 20px;
