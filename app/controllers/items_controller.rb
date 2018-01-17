@@ -113,6 +113,19 @@ class ItemsController < ApplicationController
         flash[:warning] = "商品を追加できませんでした"
       end
       redirect_to user_path(current_user)
+    elsif item_url.include?("https://quiet-meadow-28545.herokuapp.com/")
+      #テスト用サイト
+      item_scraping(item_url)
+      @item.company = "テスト用サイト"
+      @i = rand(0..1)
+      if @i == 0
+        @item.save
+        current_user.want(@item)
+        flash[:success] = "商品を追加しました" 
+      else
+        flash[:warning] = "商品を追加できませんでした"
+      end
+      redirect_to user_path(current_user)
     else
       flash[:danger] = "商品を追加できませんでした" 
       redirect_to user_path(current_user)

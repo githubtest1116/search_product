@@ -11,7 +11,7 @@
         		<p>Farfetchのサイトは<a href="https://www.farfetch.com/jp/shopping/men/items.aspx" target="_blank">こちら</a>です</p>
         		<div class="text-right">
         			<%#= f.submit '商品の追加', onclick="window.close();", class:"btn btn-success" %>
-        			<%= f.submit '商品の追加', class:"btn btn-success" %>
+        			<%= f.submit '商品の追加', class:"btn btn-success", data: { confirm: "少し時間がかかりますが、よろしいですか?"}  %>
         		</div>
         	<% end %>
         </div>
