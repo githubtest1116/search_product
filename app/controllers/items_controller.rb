@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
   
   def create
     @item = Item.find_by(code: params[:item_code])
-    
+
     @i = 0
     #更新用API呼び出し
     update_price
@@ -61,7 +61,13 @@ class ItemsController < ApplicationController
   
   def show
     @item = Item.find(params[:id])
-
+    
+    person = Ownership.find_by_sql(["select count( distinct user_id ) as count from ownerships inner join items on ownerships.item_id in (select items.id from items where items.code = ?)", @item.code])
+    @person_count = person[0].count
+    #select count( distinct user_id ) as count from ownerships inner join items on ownerships.item_id in (select items.id from items where items.code = "cosme-venus:10001742");
+    #u = Ownership.find_by_sql(["select count( distinct user_id ) as count from ownerships inner join items on ownerships.item_id in (select items.id from items where items.code = 'cosme-venus:10001742')"]) 
+    #u[0].count
+    
     #横軸
     #xAxis_categories = ['2013-11-09', '2013-11-10', '2013-11-11', '2013-11-12']
     xAxis_categories = []
@@ -102,33 +108,48 @@ class ItemsController < ApplicationController
     item_url = params[:"/items/register"][:item_url]
     @i = 0
     
-    if item_url != "" && item_url.include?("farfetch.com")
-      #@item = item_scraping(item_url)
-      item_scraping(item_url)
-      if @i == 0
-        @item.save
-        current_user.want(@item)
-        flash[:success] = "商品を追加しました" 
-      else
-        flash[:warning] = "商品を追加できませんでした"
-      end
-      redirect_to user_path(current_user)
-    elsif item_url.include?("https://quiet-meadow-28545.herokuapp.com/")
-      #テスト用サイト
-      item_scraping(item_url)
-      @item.company = "テスト用サイト"
-      @i = rand(0..1)
-      if @i == 0
-        @item.save
-        current_user.want(@item)
-        flash[:success] = "商品を追加しました" 
-      else
-        flash[:warning] = "商品を追加できませんでした"
-      end
+    check = current_user.ownership_items.find_by(url: item_url)
+    #binding.pry
+    if check != nil
+      flash[:warning] = "既に商品は登録されています"
       redirect_to user_path(current_user)
     else
-      flash[:danger] = "商品を追加できませんでした" 
-      redirect_to user_path(current_user)
+      if item_url != "" && item_url.include?("farfetch.com")
+        #@item = item_scraping(item_url)
+        item_scraping(item_url)
+        if @i == 0
+          @item.save
+          current_user.want(@item)
+          flash[:success] = "商品を追加しました" 
+        else
+          flash[:warning] = "商品を追加できませんでした"
+        end
+        redirect_to user_path(current_user)
+      elsif item_url.include?("https://quiet-meadow-28545.herokuapp.com/")
+      
+        #テスト用サイト
+        if item_url.include?("static_image")
+          item_scraping(item_url)
+          @item.company = "テスト用サイト"
+        elsif item_url.include?("variable_image")
+          item_scraping(item_url)
+          @item.company = "テスト用サイト"
+        else
+          @i = 1
+        end
+  
+        if @i == 0
+          @item.save
+          current_user.want(@item)
+          flash[:success] = "商品を追加しました" 
+        else
+          flash[:warning] = "商品を追加できませんでした(テスト)"
+        end
+        redirect_to user_path(current_user)
+      else
+        flash[:danger] = "商品を追加できませんでした。URLを確認して下さい。" 
+        redirect_to user_path(current_user)
+      end
     end
   end
   
@@ -174,6 +195,7 @@ class ItemsController < ApplicationController
   end
   
   def update_price
+    #binding.pry
     ##各社の商品検索APIを呼び出す
     if @item.company == "Yahoo!"
       #Yahoo!
@@ -198,6 +220,15 @@ class ItemsController < ApplicationController
       end
     elsif @item.company == "Farfetch"
       #Farfetch
+      if Item.find_by(code: @item.code)
+        #2回目以降
+        item_scraping_continue(@item)
+      else
+        #初回登録時
+        item_url = @item.url
+        item_scraping(item_url)
+      end
+    elsif @item.company == "テスト用サイト"
       if Item.find_by(code: @item.code)
         #2回目以降
         item_scraping_continue(@item)

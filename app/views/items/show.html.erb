@@ -24,8 +24,9 @@
 	<%# 価格チャートをここに載せる %>
 	<div class="col-md-9 col-sm-6 col-xs-12">
 		<%= high_chart("chart-1", @graph_data) %>
-		<div class="text-left itme_show_font_size">
-			<span>※最新の7日間分を表示</span>
+		<div>
+			<span class="heart-custom glyphicon glyphicon-heart"><%= @person_count %></span>
+			<span class="itme_show_font_size">※最新の7日間分を表示</span>
 		</div>
 		<div class="update-button">
 			<%= form_tag(items_path) do %>
@@ -36,3 +37,27 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		toastr.options.timeOut = 3000; // 3秒
+		
+	toastr.options = {
+	  "closeButton": true,
+	  "debug": false,
+	  "newestOnTop": false,
+	  "progressBar": false,
+	  "positionClass": "toast-top-center",
+	  "preventDuplicates": false,
+	  "onclick": null,
+	  "showDuration": "300",
+	  "hideDuration": "1000",
+	  "timeOut": "5000",
+	  "extendedTimeOut": "1000",
+	  "showEasing": "swing",
+	  "hideEasing": "linear",
+	  "showMethod": "fadeIn",
+	  "hideMethod": "fadeOut"
+	}
+	Command: toastr["info"]("<%= @person_count %>人がお気に入り登録をしています");
+	});
+</script>
