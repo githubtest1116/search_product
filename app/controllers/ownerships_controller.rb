@@ -23,14 +23,8 @@ class OwnershipsController < ApplicationController
       end
 
       @item.save
-      flash[:success] = "お気に入りに登録しました"
-  
-    ####
-    #暫定で追加中
-    #else
-    #  flash[:danger] = "商品は既に登録されています"
-    #####
     end
+    flash[:success] = "お気に入りに登録しました"
     current_user.want(@item)
 
     redirect_back(fallback_location: root_url)

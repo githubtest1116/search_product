@@ -206,7 +206,9 @@ class ItemsController < ApplicationController
         result = JSON.parse(open(url).read, symbolize_names: true)
         @item = Item.new(read_yahoo_itemLookup_update(result))
         @i = 0
-      rescue Mechanize::ResponseCodeError
+      rescue => e
+      #rescue Mechanize::ResponseCodeError
+        p e
         return @i = 1
       end
     elsif @item.company == "楽天"
@@ -215,7 +217,9 @@ class ItemsController < ApplicationController
         results = RakutenWebService::Ichiba::Item.search(itemCode: @item.code)
         @item = Item.new(read_rakuten(results.first))
         @i = 0
-      rescue Mechanize::ResponseCodeError
+      rescue => e
+      #rescue Mechanize::ResponseCodeError
+        p e
         return @i = 1
       end
     elsif @item.company == "Farfetch"
@@ -244,36 +248,40 @@ class ItemsController < ApplicationController
   def item_scraping(item_url)
     #初回登録時
     @item = Item.new
-    
+    sleep(10)
     agent = Mechanize.new
     agent.user_agent_alias = 'Windows Mozilla'
     url = item_url
-    
+
     begin
       #Item.first
       page = agent.get(url)
-    rescue Mechanize::ResponseCodeError
+      
+      #p page
+      #p page >> file.txt
+    #rescue Mechanize::ResponseCodeError
+    rescue => e
+      p e
       return @i = 1
     end
 
     #初回登録時
-    sleep(5)
     #商品名
     @item.name = page.search('//*[@id="slice-pdp"]/div/div[2]/div[3]/div[2]/span').text
 
     #code情報
     @item.code = "Farfetch" + "_" + @item.name
 
-    sleep(5)
     #価格取得
     itemPrice = page.search('//*[@id="slice-pdp"]/div/div[2]/div[3]/div[3]/span/strong').text
-    
+
     if itemPrice != ""
       @item.price = itemPrice.delete("¥").delete(",").strip.to_i
     else
+      p "価格情報の取得に失敗しました。"
       return @i = 1
     end
-    
+
     #URL
     #Webスクレイピング設定時に入力してもらうので再取得不要
     @item.url = item_url
@@ -282,15 +290,21 @@ class ItemsController < ApplicationController
     #Farfetchに設定
     @item.company = "Farfetch"
     
-    sleep(5)
     #画像URL
     #@item.image_url = page.search("//*[contains(@class,'_5a7352')]/img").attribute('src').value
 
-    value = page.search("//*[contains(@class,'_5a7352')]/img").attribute('src').value
+    begin
+      value = page.search("//*[contains(@class,'_5a7352')]/img").attribute('src').value
+    #rescue Mechanize::ResponseCodeError
+    rescue => e
+      p e
+      p "画像取得に失敗しました。その1"
+      return @i = 1
+    end
 
     if value == nil
       #Item.first
-      p "画像取得に失敗しました"
+      p "画像取得に失敗しました。その2"
         @item.image_url = ""
     else
       @item.image_url = value
@@ -309,7 +323,9 @@ class ItemsController < ApplicationController
     
     begin
       page = agent.get(url)
-    rescue Mechanize::ResponseCodeError
+    #rescue Mechanize::ResponseCodeError
+    rescue => e
+      p e
       return @i = 1
     end
 
@@ -336,7 +352,6 @@ class ItemsController < ApplicationController
     #Farfetchに設定
     @item.company = "Farfetch"
     
-    sleep(5)
     #画像URL
     @item.image_url = item.image_url
 
