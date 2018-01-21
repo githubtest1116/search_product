@@ -248,22 +248,34 @@ class ItemsController < ApplicationController
   def item_scraping(item_url)
     #初回登録時
     @item = Item.new
-    sleep(10)
+    sleep(5)
     agent = Mechanize.new
     agent.user_agent_alias = 'Windows Mozilla'
     url = item_url
+
+    #検証用URL
+    #https://www.farfetch.com/jp/shopping/men/mostly-heard-rarely-seen---item-12324199.aspx?storeid=10421&rtype=certona_undefined&rpos=6
+      p "URL set*************************"
+      p Time.now.iso8601(3)
+      p "********************************"
 
     begin
       #Item.first
       page = agent.get(url)
       
-      #p page
-      #p page >> file.txt
-    #rescue Mechanize::ResponseCodeError
+      p "URL get*************************"
+      p Time.now.iso8601(3)
+      p "********************************"
+      sleep(5)
+
     rescue => e
       p e
       return @i = 1
     end
+
+      p "URL parse***********************"
+      p Time.now.iso8601(3)
+      p "********************************"
 
     #初回登録時
     #商品名
